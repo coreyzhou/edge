@@ -3,19 +3,19 @@ package com.tenpay.springboot.edge.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.tenpay.springboot.edge.handler.HotDataFetchHandler;
 
-@RestController
+@Controller
 public class EdgeController {
+	
 	@Autowired
 	HotDataFetchHandler handler;
 
 	@RequestMapping("/")
-	@ResponseBody
+	// @ResponseBody
 	public String fetchHotDatas() {
 		try {
 			List<String> datas;
@@ -27,7 +27,7 @@ public class EdgeController {
 				strData += ("<p><a target='_blank' href='http://s.weibo.com/weibo/" + word + "'>" + word
 						+ "</a>&nbsp;&nbsp;" + star + "</p>");
 			}
-			return strData;
+			return "index";
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
