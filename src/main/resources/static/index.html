@@ -34,21 +34,25 @@ window.onload = function() {
 </script>
 </head>
 <body>
-	<h1 align="center">微博实时热搜</h1>
+	<h1 align="center">实时热搜</h1>
 	<div class="col-md-12" id="app">
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>关键词</th>
+					<th>微博</th>
+					<th>指数</th>
+					<th>百度</th>
 					<th>指数</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(item, index) in hot_datas">
+				<tr v-for="(item, index) in hot_datas.weibo_hot_datas">
 					<td>{{index+1}}</td>
 					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
 					<td>{{item.stars}}</td>
+					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
+					<td>{{hot_datas.baidu_hot_datas[index].stars}}</td>
 				</tr>
 			</tbody>
 		</table>

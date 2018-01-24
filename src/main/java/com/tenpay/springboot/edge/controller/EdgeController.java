@@ -21,21 +21,40 @@ public class EdgeController {
 	@ResponseBody
 	public String fetchHotDatas() {
 		try {
-			List<String> datas = handler.getLstHotDatas();
-			if (datas.isEmpty()) {
+			List<String> weiboDatas = handler.fetchWeiboHotData();
+			if (weiboDatas.isEmpty()) {
 				handler.fetchWeiboHotData();
-				datas = handler.getLstHotDatas();
+				weiboDatas = handler.getWeiboDatas();
 			}
-			JSONArray arr = new JSONArray();
-			for (String string : datas) {
+			List<String> baiduDatas = handler.fetchBaiduHotData();
+			if (baiduDatas.isEmpty()) {
+				handler.fetchBaiduHotData();
+				baiduDatas = handler.getBaiduDatas();
+			}
+
+			JSONArray arrWeibo = new JSONArray();
+			for (String string : weiboDatas) {
 				JSONObject json = new JSONObject();
 				String word = string.split("\\|")[0];
 				String stars = string.split("\\|")[1];
 				json.put("word", word);
 				json.put("stars", stars);
-				arr.put(json);
+				arrWeibo.put(json);
 			}
-			return arr.toString();
+
+			JSONArray arrBaidu = new JSONArray();
+			for (String string : baiduDatas) {
+				JSONObject json = new JSONObject();
+				String word = string.split("\\|")[0];
+				String stars = string.split("\\|")[1];
+				json.put("word", word);
+				json.put("stars", stars);
+				arrBaidu.put(json);
+			}
+			JSONObject result = new JSONObject();
+			result.put("weibo_hot_datas", arrWeibo);
+			result.put("baidu_hot_datas", arrBaidu);
+			return result.toString();
 		} catch (Exception e) {
 			return e.getMessage();
 		}
