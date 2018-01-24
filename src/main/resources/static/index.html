@@ -39,19 +39,19 @@ window.onload = function() {
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th width="10%">#</th>
-					<th width="45%">微博</th>
+					<th width="5%">#</th>
+					<th width="55%">微博</th>
 					<!--  <th>指数</th> -->
-					<th width="45%">百度</th>
+					<th width="40%">百度</th>
 					<!--  <th>指数</th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(item, index) in hot_datas.weibo_hot_datas">
 					<td>{{index+1}}</td>
-					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
+					<td class="text-nowrap"><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
 					<!--  <td>{{item.stars}}</td> -->
-					<td><a target="_blank" v-bind:href='"https://www.baidu.com/baidu?wd=" + hot_datas.baidu_hot_datas[index].word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
+					<td class="text-nowrap"><a target="_blank" v-bind:href='"https://www.baidu.com/baidu?wd=" + hot_datas.baidu_hot_datas[index].word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
 					<!-- <td>{{hot_datas.baidu_hot_datas[index].stars}}</td>  -->
 				</tr>
 			</tbody>
