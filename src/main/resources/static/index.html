@@ -42,15 +42,13 @@ window.onload = function() {
 					<th>#</th>
 					<th>关键词</th>
 					<th>指数</th>
-					<th>链接</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(item, index) in hot_datas">
-					<td>{{index}}</td>
-					<td>{{item.word}}</td>
+					<td>{{index+1}}</td>
+					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
 					<td>{{item.stars}}</td>
-					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>链接</a></td>
 				</tr>
 			</tbody>
 		</table>

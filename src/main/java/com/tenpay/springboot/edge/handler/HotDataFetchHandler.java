@@ -1,6 +1,7 @@
 package com.tenpay.springboot.edge.handler;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -9,23 +10,26 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
+@EnableScheduling
 public class HotDataFetchHandler {
 
 	private final static String WEIBO_URL = "http://s.weibo.com/top/summary?cate=realtimehot";
 
-	private List<String> lstHotDatas = new ArrayList<String>();
+	private static List<String> lstHotDatas = new ArrayList<String>();
 
 	public List<String> getLstHotDatas() {
 		return lstHotDatas;
 	}
 
-	@Scheduled(cron = "0 0/5 * * * ? ")
+	@Scheduled(cron = "0 0/5 * * * *")
 	public List<String> fetchWeiboHotData() {
 		List<String> allParsedDatas = new ArrayList<String>();
+		System.out.println("fetch data entered," + new Date().toString());
 		try {
 			Document document = Jsoup.connect(WEIBO_URL).get();
 			Elements scripts = document.select("script");
