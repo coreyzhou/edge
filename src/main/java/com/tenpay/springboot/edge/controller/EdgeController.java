@@ -21,12 +21,12 @@ public class EdgeController {
 	@ResponseBody
 	public String fetchHotDatas() {
 		try {
-			List<String> weiboDatas = handler.fetchWeiboHotData();
+			List<String> weiboDatas = handler.getWeiboDatas();
 			if (weiboDatas.isEmpty()) {
 				handler.fetchWeiboHotData();
 				weiboDatas = handler.getWeiboDatas();
 			}
-			List<String> baiduDatas = handler.fetchBaiduHotData();
+			List<String> baiduDatas = handler.getBaiduDatas();
 			if (baiduDatas.isEmpty()) {
 				handler.fetchBaiduHotData();
 				baiduDatas = handler.getBaiduDatas();
