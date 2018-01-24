@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<title>HOT SEARCH DATAS</title>
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet"></link>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+window.onload = function() {
+	var app = new Vue({
+		el : '#app',
+		data : {
+			hot_datas: []
+		},
+		methods : {
+			'query' : function() {
+				$.ajax({
+					method : "GET",
+					url : "get_hot_datas"
+				}).done(function(msg) {
+					app.hot_datas = JSON.parse(msg);
+				});
+			}
+		}
+	});
+	app.query();
+}
+
+</script>
+</head>
+<body>
+	<h1 align="center">微博实时热搜</h1>
+	<div class="col-md-12" id="app">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>关键词</th>
+					<th>指数</th>
+					<th>链接</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(item, index) in hot_datas">
+					<td>{{index}}</td>
+					<td>{{item.word}}</td>
+					<td>{{item.stars}}</td>
+					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>链接</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

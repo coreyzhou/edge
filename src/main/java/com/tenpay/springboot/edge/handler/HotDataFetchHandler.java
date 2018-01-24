@@ -9,6 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,13 @@ public class HotDataFetchHandler {
 
 	private final static String WEIBO_URL = "http://s.weibo.com/top/summary?cate=realtimehot";
 
+	private List<String> lstHotDatas = new ArrayList<String>();
+
+	public List<String> getLstHotDatas() {
+		return lstHotDatas;
+	}
+
+	@Scheduled(cron = "0 0/5 * * * ? ")
 	public List<String> fetchWeiboHotData() {
 		List<String> allParsedDatas = new ArrayList<String>();
 		try {
@@ -40,6 +48,8 @@ public class HotDataFetchHandler {
 					allParsedDatas.add(words + "|" + starNum);
 				}
 			}
+			lstHotDatas.clear();
+			lstHotDatas.addAll(allParsedDatas);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
