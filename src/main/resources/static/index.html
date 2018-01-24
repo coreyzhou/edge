@@ -41,18 +41,18 @@ window.onload = function() {
 				<tr>
 					<th>#</th>
 					<th>微博</th>
-					<th>指数</th>
+					<!--  <th>指数</th> -->
 					<th>百度</th>
-					<th>指数</th>
+					<!--  <th>指数</th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(item, index) in hot_datas.weibo_hot_datas">
 					<td>{{index+1}}</td>
 					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
-					<td>{{item.stars}}</td>
-					<td><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
-					<td>{{hot_datas.baidu_hot_datas[index].stars}}</td>
+					<!--  <td>{{item.stars}}</td> -->
+					<td><a target="_blank" v-bind:href='"https://www.baidu.com/baidu?wd=" + hot_datas.baidu_hot_datas[index].word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
+					<!-- <td>{{hot_datas.baidu_hot_datas[index].stars}}</td>  -->
 				</tr>
 			</tbody>
 		</table>
