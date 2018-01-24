@@ -17,11 +17,11 @@ public class FetchHandlerTest {
 
 	@Test
 	public void fetchWeiboHotDataTeset() {
-		try {
-			handler.fetchWeiboHotData();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		handler.fetchWeiboHotData();
+	}
+
+	@Test
+	public void fetchBaiduHotDataTest() {
+		handler.fetchBaiduHotData();
 	}
 }

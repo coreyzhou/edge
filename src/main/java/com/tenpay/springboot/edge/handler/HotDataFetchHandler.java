@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class HotDataFetchHandler {
 
 	private final static String WEIBO_URL = "http://s.weibo.com/top/summary?cate=realtimehot";
+	private final static String BAIDU_URL = "http://top.baidu.com/buzz?b=1&fr=topbuzz_b341_c513";
 
 	private static List<String> lstHotDatas = new ArrayList<String>();
 
@@ -29,9 +30,43 @@ public class HotDataFetchHandler {
 	@Scheduled(cron = "0 0/5 * * * *")
 	public List<String> fetchWeiboHotData() {
 		List<String> allParsedDatas = new ArrayList<String>();
-		System.out.println("fetch data entered," + new Date().toString());
+		System.out.println("fetch weibo data entered," + new Date().toString());
 		try {
 			Document document = Jsoup.connect(WEIBO_URL).get();
+			Elements scripts = document.select("script");
+			// 热搜数据存在倒数第四个script中
+			Element hotDatas = scripts.get(scripts.size() - 2);
+			// 处理热搜数据json格式
+			String strHotJson = hotDatas.toString();
+			strHotJson = strHotJson.substring(strHotJson.indexOf("{"), strHotJson.indexOf("}") + 1);
+			JSONObject json = new JSONObject(strHotJson);
+			String html = json.getString("html");
+			Document hotData = Parser.parse(html, "hot_json");
+			Elements datas = hotData.select("p");
+			String words = "";
+			for (int i = 0; i < datas.size(); i++) {
+				if (i % 3 == 0) {
+					Element a = datas.get(i).getElementsByTag("a").get(0);
+					words = a.text();
+				} else if (i % 3 == 1) {
+					String starNum = datas.get(i).text();
+					allParsedDatas.add(words + "|" + starNum);
+				}
+			}
+			lstHotDatas.clear();
+			lstHotDatas.addAll(allParsedDatas);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return allParsedDatas;
+	}
+	
+	@Scheduled(cron = "0 0/5 * * * *")
+	public List<String> fetchBaiduHotData() {
+		List<String> allParsedDatas = new ArrayList<String>();
+		System.out.println("fetch baidu data entered," + new Date().toString());
+		try {
+			Document document = Jsoup.connect(BAIDU_URL).get();
 			Elements scripts = document.select("script");
 			// 热搜数据存在倒数第四个script中
 			Element hotDatas = scripts.get(scripts.size() - 2);
