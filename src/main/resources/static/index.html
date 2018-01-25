@@ -7,55 +7,80 @@
 <title>HOT SEARCH DATAS</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+<link href="css/hotsearch.css" rel="stylesheet"></link>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/vue.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
-window.onload = function() {
-	var app = new Vue({
-		el : '#app',
-		data : {
-			hot_datas: []
-		},
-		methods : {
-			'query' : function() {
-				$.ajax({
-					method : "GET",
-					url : "get_hot_datas"
-				}).done(function(msg) {
-					app.hot_datas = JSON.parse(msg);
-				});
+	window.onload = function() {
+		var app = new Vue({
+			el : '#app',
+			data : {
+				hot_datas : []
+			},
+			methods : {
+				'query' : function() {
+					$.ajax({
+						method : "GET",
+						url : "get_hot_datas"
+					}).done(function(msg) {
+						app.hot_datas = JSON.parse(msg);
+					});
+				}
 			}
-		}
-	});
-	app.query();
-}
-
+		});
+		app.query();
+	}
 </script>
 </head>
 <body>
-	<h1 align="center">实时热搜</h1>
-	<div class="col-md-12" id="app">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th width="5%">#</th>
-					<th width="55%">微博</th>
-					<!--  <th>指数</th> -->
-					<th width="40%">百度</th>
-					<!--  <th>指数</th> -->
-				</tr>
-			</thead>
-			<tbody>
-				<tr v-for="(item, index) in hot_datas.weibo_hot_datas">
-					<td>{{index+1}}</td>
-					<td class="text-nowrap"><a target="_blank" v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
-					<!--  <td>{{item.stars}}</td> -->
-					<td class="text-nowrap"><a target="_blank" v-bind:href='"https://www.baidu.com/baidu?wd=" + hot_datas.baidu_hot_datas[index].word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
-					<!-- <td>{{hot_datas.baidu_hot_datas[index].stars}}</td>  -->
-				</tr>
-			</tbody>
-		</table>
+	<div id="wrapper">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<h1 class="navbar-brand">HOT SEARCH</h1>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">zhihu</a></li>
+						<li><a href="#">weibo</a></li>
+						<li><a href="#">baidu</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="col-md-12" id="app">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th width="5%">#</th>
+						<th width="55%">微博</th>
+						<!--  <th>指数</th> -->
+						<th width="40%">百度</th>
+						<!--  <th>指数</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item, index) in hot_datas.weibo_hot_datas">
+						<td>{{index+1}}</td>
+						<td class="text-nowrap"><a target="_blank"
+							v-bind:href='"http://s.weibo.com/weibo/" + item.word'>{{item.word}}</a></td>
+						<!--  <td>{{item.stars}}</td> -->
+						<td class="text-nowrap"><a target="_blank"
+							v-bind:href='"https://www.baidu.com/baidu?wd=" + hot_datas.baidu_hot_datas[index].word'>{{hot_datas.baidu_hot_datas[index].word}}</a></td>
+						<!-- <td>{{hot_datas.baidu_hot_datas[index].stars}}</td>  -->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer>
+			<div id="info-bar">
+				<div class="navbar navbar-default">
+					<span class="all-tutorials">Copyright 2018 VIPMM.ORG All
+						Rights Reserved</span>
+				</div>
+			</div>
+		</footer>
 	</div>
 </body>
 </html>

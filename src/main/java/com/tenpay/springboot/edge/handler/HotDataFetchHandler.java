@@ -19,10 +19,12 @@ import org.springframework.stereotype.Component;
 public class HotDataFetchHandler {
 
 	private final static String WEIBO_URL = "http://s.weibo.com/top/summary?cate=realtimehot";
-	private final static String BAIDU_URL = "http://top.baidu.com/buzz?b=1&fr=topbuzz_b341_c513";
+	private final static String BAIDU_URL = "http://top.baidu.com/buzz?b=1&fr=topbuzz_b341_c513"; 
+	private final static String ZHIHU_URL = "https://www.zhihu.com/api/v4/search/top_search"; 
 
 	private static List<String> WEIBO_HOT_DATAS = new ArrayList<String>();
 	private static List<String> BAIDU_HOT_DATAS = new ArrayList<String>();
+	private static List<String> ZHIHU_HOT_DATAS = new ArrayList<String>();
 
 	public List<String> getWeiboDatas() {
 		return WEIBO_HOT_DATAS;
@@ -31,11 +33,15 @@ public class HotDataFetchHandler {
 	public List<String> getBaiduDatas() {
 		return BAIDU_HOT_DATAS;
 	}
+	
+	public List<String> getZhihuDatas() {
+		return ZHIHU_HOT_DATAS;
+	}
 
 	@Scheduled(cron = "0 0/5 * * * *")
 	public List<String> fetchWeiboHotData() {
 		List<String> allParsedDatas = new ArrayList<String>();
-		System.out.println("fetch weibo data entered," + new Date().toString());
+		System.out.println("fetch weibo data entered, " + new Date().toString());
 		try {
 			Document document = Jsoup.connect(WEIBO_URL).get();
 			Elements scripts = document.select("script");
@@ -69,7 +75,7 @@ public class HotDataFetchHandler {
 	@Scheduled(cron = "0 0/5 * * * *")
 	public List<String> fetchBaiduHotData() {
 		List<String> allParsedDatas = new ArrayList<String>();
-		System.out.println("fetch baidu data entered," + new Date().toString());
+		System.out.println("fetch baidu data entered, " + new Date().toString());
 		try {
 			Document document = Jsoup.connect(BAIDU_URL).get();
 			Elements words = document.select(".list-title");
@@ -82,6 +88,21 @@ public class HotDataFetchHandler {
 			}
 			BAIDU_HOT_DATAS.clear();
 			BAIDU_HOT_DATAS.addAll(allParsedDatas);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return allParsedDatas;
+	}
+	
+	@Scheduled(cron = "0 0/5 * * * *")
+	public List<String> fetchZhihuHotData() {
+		List<String> allParsedDatas = new ArrayList<String>();
+		System.out.println("fetch zhihu data entered, " + new Date().toString());
+		try {
+			Document document = Jsoup.connect(ZHIHU_URL).get();
+			
+			ZHIHU_HOT_DATAS.clear();
+			ZHIHU_HOT_DATAS.addAll(allParsedDatas);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
