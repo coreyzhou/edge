@@ -94,7 +94,7 @@ public class HotDataFetchHandler {
 		return allParsedDatas;
 	}
 	
-	@Scheduled(cron = "0 0/5 * * * *")
+	// @Scheduled(cron = "0 0/5 * * * *")
 	public List<String> fetchZhihuHotData() {
 		List<String> allParsedDatas = new ArrayList<String>();
 		System.out.println("fetch zhihu data entered, " + new Date().toString());
