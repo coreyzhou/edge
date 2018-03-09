@@ -21,17 +21,17 @@ public class EdgeController {
 	@ResponseBody
 	public String fetchHotDatas() {
 		try {
-//			List<String> weiboDatas = handler.getWeiboDatas();
-//			if (weiboDatas.isEmpty()) {
-//				handler.fetchWeiboHotData();
-//				weiboDatas = handler.getWeiboDatas();
-//			}
+			List<String> weiboDatas = handler.getWeiboDatas();
+			if (weiboDatas.isEmpty()) {
+				handler.fetchWeiboHotData();
+				weiboDatas = handler.getWeiboDatas();
+			}
 			List<String> baiduDatas = handler.getBaiduDatas();
 			if (baiduDatas.isEmpty()) {
 				handler.fetchBaiduHotData();
 				baiduDatas = handler.getBaiduDatas();
 			}
-			List<String> weiboDatas = handler.getBaiduDatas();
+			// List<String> weiboDatas = handler.getBaiduDatas();
 
 			JSONArray arrWeibo = new JSONArray();
 			for (String string : weiboDatas) {
